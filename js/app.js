@@ -19,16 +19,17 @@ const showCategories = (categories) => {
 
 const newsGet = async (categoryId) => {
   const url = `https://openapi.programming-hero.com/api/news/category/${categoryId}`;
-  const res = await fetch(url);
-  const data = await res.json();
-  showNews(data?.data);
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => showNews(data.data));
+  // .catch((error) => console.log(error));
 };
 
 const showNews = (allNews) => {
   const newsContainer = document.getElementById("news-container");
   newsContainer.innerHTML = "";
 
-  allNews
+  allNews && allNews.length !== 0
     ? allNews.forEach((news) => {
         const div = document.createElement("div");
         div.classList.add("card", "rounded-4", "mb-3", "col-12");
@@ -51,7 +52,7 @@ const showNews = (allNews) => {
                 </p>
                 <div class="row news-footer align-items-center">
                   <div
-                    class="col-lg-4 col-md-4 col-sm-5 col-7 d-flex justify-content-evenly align-items-center"
+                    class="col-lg-4 col-md-4 col-sm-5 col-5 d-flex justify-content-evenly align-items-center"
                   >
                     <div class="author-img me-2">
                       <img class="img-fluid"
@@ -72,13 +73,13 @@ const showNews = (allNews) => {
                       }</p>
                     </div>
                   </div>
-                  <div class="col-lg-2 col-lg-2 col-sm-2 col-1 ">
+                  <div class="col-lg-2 col-lg-2 col-sm-2 col-2 views">
                     <i class="fa-regular fa-eye me-lg-2 me-1"></i>${
                       news.total_view !== null ? news.total_view : "0"
                     }
                   </div>
                   <div
-                    class="col-lg-4 col-md-4 col-sm-3 col-2 d-flex justify-content-center align-content-center py-4"
+                    class="col-lg-4 col-md-4 col-sm-3 col-2 d-flex justify-content-center align-content-center stars"
                   >
                     <i class="fa-solid fa-star"></i
                     ><i class="fa-solid fa-star"></i
@@ -86,8 +87,10 @@ const showNews = (allNews) => {
                     ><i class="fa-solid fa-star"></i
                     ><i class="fa-solid fa-star"></i>
                   </div>
-                  <div class="col-lg-2 col-md-2 col-sm-2 col-2 fs-5 py-lg-3 py-md-3 pe-sm-3 pe-3 text-center">
-                    <i class="fa-sharp fa-solid fa-arrow-right fs-1"></i>
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-2 fs-5 px-lg-3 px-md-3 pe-sm-3 ps-3 text-center">
+                    <i  onclick="showDetails('${
+                      news._id
+                    }')" type="button" data-bs-toggle="modal" data-bs-target="#newsModal" class="fa-sharp fa-solid fa-arrow-right fs-1"></i>
                   </div>
                 </div>
               </div>
@@ -96,7 +99,47 @@ const showNews = (allNews) => {
     `;
         newsContainer.appendChild(div);
       })
-    : "no data found";
+    : alert("No Data Found");
+};
+
+const showDetails = async (news_id) => {
+  const url = `https://openapi.programming-hero.com/api/news/${news_id}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  showNewsDetails(data.data);
+};
+
+const showNewsDetails = (newsData) => {
+  const modalTitle = document.getElementById("newsModalLabel");
+  const modalBody = document.getElementById("modal-body");
+  newsData?.forEach((data) => {
+    modalTitle.innerText = `${data.title}`;
+    modalBody.innerHTML = `
+    <div class="author-img me-2"><img class="img-fluid" src="${
+      data.author.img
+    }" alt=""/></div>
+      Author Name : <h2>${
+        data.author.name !== null || data.author.name === ""
+          ? data.author.name
+          : "Anonymous Author"
+      }</h2>
+
+      <div class="views">
+        <i class="fa-regular fa-eye me-1"></i>${
+          data.total_view !== null ? data.total_view : "0"
+        }
+      </div>
+      Published Date : <p class="date-published">${
+        data.author.published_date !== null
+          ? data.author.published_date
+          : "2022-10-10"
+      }</p>
+      News Details : <p class="card-text mb-5 mt-2 p-lg-1">${data.details}</p>
+      News Rating : ${data.rating.number} [ ${data.rating.badge} ]
+
+    
+    `;
+  });
 };
 
 // newsGet();
