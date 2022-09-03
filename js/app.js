@@ -31,62 +31,54 @@ const showNews = (allNews) => {
   allNews
     ? allNews.forEach((news) => {
         const div = document.createElement("div");
-        div.classList.add(
-          "card",
-          "rounded-4",
-          "mb-3",
-          "col-lg-12",
-          "col-md-12",
-          "col-sm-6",
-          "col-6"
-        );
+        div.classList.add("card", "rounded-4", "mb-3", "col-12");
         div.innerHTML = `
     <div class="row g-0">
-            <div class="col-md-4 p-3">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-12  p-3">
               <img
                 src="${news.thumbnail_url}"
                 class="img-fluid rounded-4 w-100"
                 alt="..."
               />
             </div>
-            <div class="col-md-8 position-relative">
+            <div class="col-lg-8 col-md-8 col-sm-12 col-12 position-relative">
               <div class="card-body">
-                <h1 class="card-title fw-bold">
+                <h1 class="card-title fw-bold news-title">
                   ${news.title}
                 </h1>
-                <p class="card-text text-des mb-5 mt-2 fs-5 p-1">
+                <p class="card-text text-des mb-5 mt-2 p-lg-1">
                   ${news.details}
                 </p>
                 <div class="row news-footer align-items-center">
                   <div
-                    class="col-4 d-flex justify-content-evenly align-items-center"
+                    class="col-lg-4 col-md-4 col-sm-5 col-7 d-flex justify-content-evenly align-items-center"
                   >
                     <div class="author-img me-2">
-                      <img
+                      <img class="img-fluid"
                         src="${news.author.img}"
                         alt=""
                       />
                     </div>
                     <div>
-                      <h5 class="fw-bold">${
-                        news.author.name !== null
+                      <h5 class="fw-bold author-name">${
+                        news.author.name !== null || news.author.name === ""
                           ? news.author.name
                           : "Anonymous"
                       }</h5>
-                      <p>${
+                      <p class="date-published">${
                         news.author.published_date !== null
                           ? news.author.published_date.slice(0, 10)
                           : "2022-10-10"
                       }</p>
                     </div>
                   </div>
-                  <div class="col-2 fs-2 py-3">
-                    <i class="fa-regular fa-eye me-2"></i>${
+                  <div class="col-lg-2 col-lg-2 col-sm-2 col-1 ">
+                    <i class="fa-regular fa-eye me-lg-2 me-1"></i>${
                       news.total_view !== null ? news.total_view : "0"
                     }
                   </div>
                   <div
-                    class="col-4 d-flex fs-2 justify-content-center align-content-center py-4"
+                    class="col-lg-4 col-md-4 col-sm-3 col-2 d-flex justify-content-center align-content-center py-4"
                   >
                     <i class="fa-solid fa-star"></i
                     ><i class="fa-solid fa-star"></i
@@ -94,7 +86,7 @@ const showNews = (allNews) => {
                     ><i class="fa-solid fa-star"></i
                     ><i class="fa-solid fa-star"></i>
                   </div>
-                  <div class="col-2 fs-2 py-3 text-center">
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-2 fs-5 py-lg-3 py-md-3 pe-sm-3 pe-3 text-center">
                     <i class="fa-sharp fa-solid fa-arrow-right fs-1"></i>
                   </div>
                 </div>
