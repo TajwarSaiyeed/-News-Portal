@@ -90,7 +90,7 @@ const showNews = (allNews) => {
                   <div class="col-lg-2 col-md-2 col-sm-2 col-2 fs-5 px-lg-3 px-md-3 pe-sm-3 ps-3 text-center">
                     <i  onclick="showDetails('${
                       news._id
-                    }')" type="button" data-bs-toggle="modal" data-bs-target="#newsModal" class="fa-sharp fa-solid fa-arrow-right fs-1"></i>
+                    }')" type="button" data-bs-toggle="modal" data-bs-target="#newsModal" class="fa-sharp fa-solid fa-arrow-right fs-1 cursor-pointer"></i>
                   </div>
                 </div>
               </div>
