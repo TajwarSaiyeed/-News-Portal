@@ -42,6 +42,9 @@ const showCategories = (categories) => {
 };
 
 const newsGet = async (categoryId) => {
+  const catSpin = document.getElementById("category-spin");
+  catSpin.classList.remove("d-none");
+  catSpin.classList.add("d-flex");
   const url = `https://openapi.programming-hero.com/api/news/category/${categoryId}`;
   fetch(url)
     .then((res) => res.json())
@@ -102,7 +105,9 @@ const showNews = (allNews) => {
                   </div>
                   <div class="col-lg-2 col-lg-2 col-sm-2 col-2 views">
                     <i class="fa-regular fa-eye me-lg-2 me-1"></i>${
-                      news.total_view !== null ? news.total_view : "0"
+                      news.total_view !== null
+                        ? news.total_view
+                        : "No data found"
                     }
                   </div>
                   <div
@@ -127,6 +132,10 @@ const showNews = (allNews) => {
         newsContainer.appendChild(div);
       })
     : alert("No Data Found");
+
+  const catSpin = document.getElementById("category-spin");
+  catSpin.classList.remove("d-flex");
+  catSpin.classList.add("d-none");
 };
 
 const showDetails = async (news_id) => {
