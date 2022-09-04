@@ -1,7 +1,31 @@
+document.getElementById("blog-btn").addEventListener("click", () => {
+  const allNewsDataContainer = document.getElementById(
+    "all-news-data-container"
+  );
+  const blog = document.getElementById("blog-container");
+  dyCategory.classList.remove("d-flex");
+  dyCategory.classList.add("d-none");
+  allNewsDataContainer.classList.add("d-none");
+  blog.classList.remove("d-none");
+});
+
+document.getElementById("news-btn").addEventListener("click", () => {
+  const allNewsDataContainer = document.getElementById(
+    "all-news-data-container"
+  );
+  const dyCategory = document.getElementById("dyCategory");
+  const blog = document.getElementById("blog-container");
+  dyCategory.classList.add("d-flex");
+  dyCategory.classList.remove("d-none");
+  allNewsDataContainer.classList.remove("d-none");
+  blog.classList.add("d-none");
+});
+
 const newsCategory = async () => {
   const url = `https://openapi.programming-hero.com/api/news/categories`;
   const res = await fetch(url);
   const dataGet = await res.json();
+
   showCategories(dataGet.data.news_category);
 };
 const showCategories = (categories) => {
@@ -21,14 +45,17 @@ const newsGet = async (categoryId) => {
   const url = `https://openapi.programming-hero.com/api/news/category/${categoryId}`;
   fetch(url)
     .then((res) => res.json())
-    .then((data) => showNews(data.data));
-  // .catch((error) => console.log(error));
+    .then((data) => showNews(data.data))
+    .catch((error) => console.log(error));
 };
 
 const showNews = (allNews) => {
   const newsContainer = document.getElementById("news-container");
   newsContainer.innerHTML = "";
-
+  const dataCountContainer = document.getElementById("data-count-container");
+  dataCountContainer.classList.remove("d-none");
+  const dataCount = document.getElementById("data-count");
+  dataCount.innerHTML = allNews.length;
   allNews && allNews.length !== 0
     ? allNews.forEach((news) => {
         const div = document.createElement("div");
@@ -64,7 +91,7 @@ const showNews = (allNews) => {
                       <h5 class="fw-bold author-name">${
                         news.author.name !== null || news.author.name === ""
                           ? news.author.name
-                          : "Anonymous"
+                          : "No Data Found"
                       }</h5>
                       <p class="date-published">${
                         news.author.published_date !== null
@@ -121,14 +148,13 @@ const showNewsDetails = (newsData) => {
       Author Name : <h2>${
         data.author.name !== null || data.author.name === ""
           ? data.author.name
-          : "Anonymous Author"
+          : "No Data Found"
       }</h2>
 
-      <div class="views">
-        <i class="fa-regular fa-eye me-1"></i>${
-          data.total_view !== null ? data.total_view : "0"
-        }
-      </div>
+      Views :  <i class="fa-regular fa-eye me-1"></i>${
+        data.total_view !== null ? data.total_view : "0"
+      }
+      <br>
       Published Date : <p class="date-published">${
         data.author.published_date !== null
           ? data.author.published_date
