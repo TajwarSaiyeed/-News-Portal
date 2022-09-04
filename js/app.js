@@ -23,10 +23,10 @@ document.getElementById("news-btn").addEventListener("click", () => {
 
 const newsCategory = async () => {
   const url = `https://openapi.programming-hero.com/api/news/categories`;
-  const res = await fetch(url);
-  const dataGet = await res.json();
-
-  showCategories(dataGet.data.news_category);
+  fetch(url)
+    .then((res) => res.json())
+    .then((dataGet) => showCategories(dataGet.data.news_category))
+    .catch((err) => console.log(err));
 };
 const showCategories = (categories) => {
   const dynamicCategory = document.querySelector(".dynamic-category");
@@ -45,6 +45,10 @@ const newsGet = async (categoryId) => {
   const catSpin = document.getElementById("category-spin");
   catSpin.classList.remove("d-none");
   catSpin.classList.add("d-flex");
+  const newsContainer = document.getElementById("news-container");
+  newsContainer.innerHTML = "";
+  const dataCountContainer = document.getElementById("data-count-container");
+  dataCountContainer.classList.add("d-none");
   const url = `https://openapi.programming-hero.com/api/news/category/${categoryId}`;
   fetch(url)
     .then((res) => res.json())
@@ -161,13 +165,13 @@ const showNewsDetails = (newsData) => {
       }</h2>
 
       Views :  <i class="fa-regular fa-eye me-1"></i>${
-        data.total_view !== null ? data.total_view : "0"
+        data.total_view !== null ? data.total_view : "No Data Found"
       }
       <br>
       Published Date : <p class="date-published">${
         data.author.published_date !== null
           ? data.author.published_date
-          : "2022-10-10"
+          : "No data Found"
       }</p>
       News Details : <p class="card-text mb-5 mt-2 p-lg-1">${data.details}</p>
       News Rating : ${data.rating.number} [ ${data.rating.badge} ]
@@ -177,6 +181,6 @@ const showNewsDetails = (newsData) => {
   });
 };
 
-// newsGet();
+newsGet("07");
 
 newsCategory();
