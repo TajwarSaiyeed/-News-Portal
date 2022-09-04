@@ -173,7 +173,12 @@ const showNewsDetails = (newsData) => {
           ? data.author.published_date
           : "No data Found"
       }</p>
-      News Details : <p class="card-text mb-5 mt-2 p-lg-1">${data.details}</p>
+      <img
+                src="${data.thumbnail_url}"
+                class="img-fluid rounded-4 w-100"
+                alt="..."
+              />
+      News Details : <p class="card-text mb-5 mt-3 p-lg-1 ">${data.details}</p>
       News Rating : ${data.rating.number} [ ${data.rating.badge} ]
 
     
