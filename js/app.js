@@ -63,6 +63,9 @@ const showNews = (allNews) => {
   dataCountContainer.classList.remove("d-none");
   const dataCount = document.getElementById("data-count");
   dataCount.innerHTML = allNews.length;
+  allNews.sort((a,b) => {
+  return b.total_view - a.total_view;
+  });
   allNews && allNews.length !== 0
     ? allNews.forEach((news) => {
         const div = document.createElement("div");
